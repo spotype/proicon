@@ -1,7 +1,14 @@
 import getPost from "@/lib/getPost";
 
-export default async function page({ params }) {
-  const { slug } = params;
+interface Pages {
+  params: {
+    slug: number;
+    // other properties if needed
+  };
+  // other properties if needed
+}
+export default async function page(pages: Pages) {
+  const { slug }: { slug: number } = pages.params;
   const post = await getPost(slug);
   return (
     <div className="py-5">
@@ -20,8 +27,8 @@ export default async function page({ params }) {
   );
 }
 
-export async function generateMetadata({ params }) {
-  const { slug } = params;
+export async function generateMetadata(pages: Pages) {
+  const { slug } = pages.params;
   const post = await getPost(slug);
 
   return { title: post.title };
